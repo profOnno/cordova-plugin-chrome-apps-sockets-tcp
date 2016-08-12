@@ -130,13 +130,18 @@ public class ChromeSocketsTcp extends CordovaPlugin {
 
   private void create(CordovaArgs args, final CallbackContext callbackContext)
       throws JSONException {
-    JSONObject properties = args.getJSONObject(0);
+    final JSONObject properties = args.getJSONObject(0);
 
-    try {
-      TcpSocket socket = new TcpSocket(nextSocket++, properties);
-      sockets.put(Integer.valueOf(socket.getSocketId()), socket);
-      callbackContext.success(socket.getSocketId());
-    } catch (IOException e) {
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        try {
+          TcpSocket socket = new TcpSocket(nextSocket++, properties);
+          sockets.put(Integer.valueOf(socket.getSocketId()), socket);
+          callbackContext.success(socket.getSocketId());
+        } catch (IOException e) {
+        } catch (JSONException e) {
+        }
+      }
     }
   }
 
