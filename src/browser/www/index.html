@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Test Server side Proxy</h2>
+<button id="btnCreate" type="button">create</button><br>
+
+<button id="btnConnect" type="button">connect</button>
+<input id="inpHost" size=14 value="192.168.1.101">
+<input id="inpPort" size=5 value="3000"><br>
+<textarea id='taHistory' rows=10, cols=60></textarea><br>
+<button id="btnSend" type="button">send</button>
+<input id="inpSend" size=40 value="hellowrrrld">
+<br>
+<button id="btnSendHex" type="button">send Hex</button>
+<input id="inpSendHex" size=40 value="0x10 0x02 0x31 0x7E 0x94 0x10 0x03">
+<br>
+
+<p id="pLog"></p>
+<script src="./jdataview.js"></script>
+<script>
+var eCreate = document.getElementById("btnCreate"),
+    eConnect = document.getElementById("btnConnect"),
+    eHost = document.getElementById("inpHost"),
+    ePort = document.getElementById("inpPort"),
+    eSend = document.getElementById("btnSend"),
+    eSendValue = document.getElementById("inpSend"),
+    eSendHex = document.getElementById("btnSendHex"),
+    eSendHexValue = document.getElementById("inpSendHex"),
+    eHistory = document.getElementById("taHistory"),
+    eLog = document.getElementById("pLog");
+
+var socketId = null,
+    ws = null;
+
+var postIt = function (data, callback) {
+    console.log(JSON.stringify(data));
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            callback(xhttp.responseText);
+        } else {
+            //eLog.innerHTML += "error<br>";
+        }
+    };
+     xhttp.open("POST", "http://localhost:8001/", true);
+     xhttp.setRequestHeader("Content-type", "application/json");
+     xhttp.send(JSON.stringify(data));
+}
+
+var arrToHex = function (arr) {
+
+    var convert = function ( data ) {
+        var res = data.toString(16);
+        return '0'.repeat(res.length % 2) + res;
+    };
+
+    arr = new Uint8Array(arr); 
+
+    var newData;
+    // reduce doesn't work if byteLength === 1
+    if (arr.byteLength > 1) {
+        var newData = arr.reduce(function (a, b) {
+            return (typeof a !== 'string') ?  convert(a) + " " + convert(b) :  a + " " + convert(b);
+        });
+    } else {
+        newData = convert(arr[0]);
+    }
+    return newData;
+}
+
+eCreate.onclick = function () {
+    postIt({ action: "create" }, function (res) {
+        //eLog.innerHTML += res + "<br>";
+        eHistory.value = "SYSTEM: " + res + "\n" + eHistory.value;
+        res = JSON.parse(res);
+        // make result codes... not strings... this is slow
+        if(res.result === "ok") {
+            socketId = res.data.socketId; //set global socketId TODO make it better for multiple sockets
+            // for now we don't use the socketId;
+        }
+        console.log("post done");
+    });
+}
+
+eConnect.onclick = function () {
+    var postReq = {
+            action: "connect",
+            data: [socketId, eHost.value, ePort.value]
+        }
+
+    postIt(postReq, function (res) {
+        eHistory.value = "SYSTEM: " + res + "\n" + eHistory.value;
+        res = JSON.parse(res);
+        console.log("post done");
+        if (res.result === "ok") {
+            console.log("connect went ok");
+            ws = new WebSocket("ws://localhost:8001/" + socketId);
+            // http://blog.mgechev.com/2015/02/06/parsing-binary-protocol-data-javascript-typedarrays-blobs/
+            ws.binaryType = 'arraybuffer';
+
+            ws.onopen = function (evt) {
+                eHistory.value = "SYSTEM: Websocket open\n" + eHistory.value;
+                console.log("ws open");
+            };
+
+            ws.onclose = function (evt) {
+                eHistory.value = "SYSTEM: Websocket closed\n" + eHistory.value;
+                console.log("ws closed:", evt.code);
+            };
+
+            ws.onmessage = function (evt){
+                //eLog.innerHTML += evt.data + "<br>";
+                console.log("wsOnMessage");
+ //               console.log(JSON.stringify(new Uint8Array(evt.data)));
+                console.log(arrToHex(evt.data));
+
+            };
+        } else {
+            eHistory.value = "SYSTEM: Error Connecting\n" + eHistory.value;
+            console.log("error connecting:", res.result);
+        }
+    });
+}
+
+send = function () {
+    // for now ws = global
+    var StringToSend = eSendValue.value;
+    console.log("sending:", StringToSend);
+    eHistory.value = "S: " + StringToSend + "\n" + eHistory.value;
+    ws.send(StringToSend + "\n");
+    
+    eSendValue.value = "";
+}
+eSend.onclick = eSendValue.onchange = send;
+
+sendHex = function () {
+    var ArrayToSend = eSendHexValue.value.split(" ");
+    
+    eHistory.value = "S: " + eSendHexValue.value + "\n" + eHistory.value;
+    console.log(ArrayToSend);
+    ArrayToSend = ArrayToSend.map(function (part) {
+        return parseInt(part);
+    });
+//    console.log("ArrayToSend:");
+    console.log(ArrayToSend);
+    
+    console.log("********************************************************");
+    ws.send(new Uint8Array(ArrayToSend));
+}
+eSendHex.onclick = eSendHexValue.onchange = sendHex;
+
+
+</script>
+</body>
+</html>
+
