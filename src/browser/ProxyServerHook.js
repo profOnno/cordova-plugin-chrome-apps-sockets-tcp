@@ -13,7 +13,6 @@ module.exports = function (context) {
         server = require('http').createServer(),
         randid = require('random-strings'),
         Socket = require('net').Socket,
-        b64 = require('base64-js'),
         websocket = require('websocket-stream'),
         DuplexStream = require('stream').Duplex,
         wsSockets = {}, //holds websockets to frontend
