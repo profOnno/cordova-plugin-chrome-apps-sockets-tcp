@@ -50,6 +50,7 @@
     <js-module src="src/browser/ChromeSocketsTcpProxy.js" name="ChromeSocketsTcpProxy">
         <runs/>
     </js-module>
+    <hook type="after_plugin_add" src="src/browser/install_dep.js"/>
     <hook type="before_run" src="src/browser/ProxyServerHook.js"/>
   </platform>
 </plugin>

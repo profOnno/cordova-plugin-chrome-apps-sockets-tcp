@@ -1,0 +1,16 @@
+{
+  "name": "cordova-plugin-chrome-apps-sockets-tcp-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ChromeSocketsTcpProxy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Menno Vossen <menno.vossen@kuopzi.nl> (https://github.com/profOnno)",
+  "license": "ISC",
+  "dependencies": {
+    "random-strings": "0.0.1",
+    "websocket-stream": "^3.2.1",
+    "ws": "^1.1.1"
+  }
+}
