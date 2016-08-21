@@ -36,9 +36,5 @@
     "url": "https://github.com/MobileChromeApps/cordova-plugin-chrome-apps-sockets-tcp/issues"
   },
   "homepage": "https://github.com/MobileChromeApps/cordova-plugin-chrome-apps-sockets-tcp",
-  "dependencies": {
-    "random-strings": "0.0.1",
-    "websocket-stream": "^3.2.1",
-    "ws": "^1.1.1"
   }
 }
