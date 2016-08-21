@@ -10,8 +10,8 @@ execFile('npm', ['install'], { cwd: "src/browser" }, function (error, stdout, st
     console.log(stdout);
 });
 */
-//var npm = spawn('npm', ['install'], { cwd: "src/browser" });
-var npm = spawn('npm', ['install']);
+var npm = spawn('npm', ['install'], { cwd: "src/browser" });
+//var npm = spawn('npm', ['install']);
 npm.stdout.pipe(process.stdout);
 npm.stderr.pipe(process.stderr);
 
