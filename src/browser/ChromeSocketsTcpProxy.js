@@ -135,7 +135,7 @@ var ChromeSocketsTcp = {
         //var socketId = options.data[0];
         // don't know why options has socketId in object???
         postAction({ action: "connect", data: options  }, function (res) {
-            var socketId = options.socketId;
+            var socketId = options[0];
             log("back from postAction connect");
             log(res); 
             res = JSON.parse(res);
