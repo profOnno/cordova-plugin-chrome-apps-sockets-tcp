@@ -17,14 +17,14 @@ execFile('pwd', function (error, stdout, stderr) {
     }
     console.log(stdout);
 });
-/*
-execFile('npm', ['install'], { cwd: "src/browser" }, function (error, stdout, stderr) {
+
+execFile('npm', ['install'], { cwd: "plugins/cordova-plugin-chrome-apps-sockets-tcp/src/browser" }, function (error, stdout, stderr) {
     if (error) {
         throw error;
     }
     console.log(stdout);
 });
-*/
+
 /*
 var npm = spawn('npm', ['install'], { cwd: "src/browser" });
 //var npm = spawn('npm', ['install']);
