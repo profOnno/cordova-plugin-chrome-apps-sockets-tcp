@@ -6,7 +6,8 @@
     "id": "cordova-plugin-chrome-apps-sockets-tcp",
     "platforms": [
       "android",
-      "ios"
+      "ios",
+      "browser"
     ]
   },
   "repository": {
@@ -20,7 +21,8 @@
     "tcp",
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-ios"
+    "cordova-ios",
+    "cordova-browser"
   ],
   "engines": [
     {
@@ -35,7 +37,6 @@
   },
   "homepage": "https://github.com/MobileChromeApps/cordova-plugin-chrome-apps-sockets-tcp",
   "dependencies": {
-    "base64-js": "^1.1.2",
     "random-strings": "0.0.1",
     "ws": "^1.1.1"
   }

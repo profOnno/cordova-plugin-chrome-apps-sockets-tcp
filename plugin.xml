@@ -47,9 +47,10 @@
   </platform>
 
   <platform name="browser">
-        <js-module src="src/browser/ChromeSocketsTcpProxy.js" name="ChromeSocketsTcpProxy">
-            <runs/>
-        </js-module>
-        <hook type="before_run" src="src/browser/ProxyServerHook.js"/>
+      <dependency id="random-strings"/>
+    <js-module src="src/browser/ChromeSocketsTcpProxy.js" name="ChromeSocketsTcpProxy">
+        <runs/>
+    </js-module>
+    <hook type="before_run" src="src/browser/ProxyServerHook.js"/>
   </platform>
 </plugin>
