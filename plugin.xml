@@ -47,7 +47,6 @@
   </platform>
 
   <platform name="browser">
-      <dependency id="random-strings"/>
     <js-module src="src/browser/ChromeSocketsTcpProxy.js" name="ChromeSocketsTcpProxy">
         <runs/>
     </js-module>
