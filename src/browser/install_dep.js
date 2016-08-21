@@ -4,6 +4,7 @@ var execFile = require('child_process').execFile,
 
 console.log("installing dependencies...");
 
+/*
 execFile('node',['-v'], function (error, stdout, stderr) {
     if (error) {
         throw error;
@@ -17,16 +18,19 @@ execFile('pwd', function (error, stdout, stderr) {
     }
     console.log(stdout);
 });
-/*
+*/
+
+// assuming the current directory is the root of your cordova app
 execFile('npm', ['install'], { cwd: "plugins/cordova-plugin-chrome-apps-sockets-tcp/src/browser" }, function (error, stdout, stderr) {
     if (error) {
         throw error;
     }
     console.log(stdout);
 });
-*/
+
 
 // assuming the current directory is the root of your cordova app
+/*
 var npm = spawn('npm', ['install'], { cwd: "plugins/cordova-plugin-chrome-apps-sockets-tcp/src/browser" });
 //var npm = spawn('npm', ['install']);
 npm.stdout.pipe(process.stdout);
@@ -35,5 +39,5 @@ npm.stderr.pipe(process.stderr);
 npm.on('close', function (code) {
     console.log("done: ", code);
 });
-
+*/
 
