@@ -4,19 +4,27 @@ var execFile = require('child_process').execFile,
 
 console.log("installing dependencies...");
 
-exec('node -v', function (error, stdout, stderr) {
+execFile('node',['-v'], function (error, stdout, stderr) {
     if (error) {
         throw error;
     }
-
     console.log(stdout);
 });
+
+execFile('pwd', function (error, stdout, stderr) {
+    if (error) {
+        throw error;
+    }
+    console.log(stdout);
+});
+/*
 execFile('npm', ['install'], { cwd: "src/browser" }, function (error, stdout, stderr) {
     if (error) {
         throw error;
     }
     console.log(stdout);
 });
+*/
 /*
 var npm = spawn('npm', ['install'], { cwd: "src/browser" });
 //var npm = spawn('npm', ['install']);
