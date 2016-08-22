@@ -163,8 +163,8 @@ var ChromeSocketsTcp = {
                     try {
                         //now only called once... seems.. to invoke the send response instead of or own one
                         setTimeout(function () {
-                            successHandler(evt.data); //1 should be SOCKET IDDD TODO
-                        },100);
+                            successHandler({socketId: socketId, data: evt.data); //1 should be SOCKET IDDD TODO
+                        },0);
                     } catch (e) {
                         //console.log("type error");
                     }
