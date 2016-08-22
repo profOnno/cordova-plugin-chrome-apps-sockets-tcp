@@ -220,7 +220,14 @@ var ChromeSocketsTcp = {
         // bytes send??
         return success(10); //TODO whats the return value
 
-}
+    },
+    close: function (success, error, options) {
+        log("close called");
+
+        var socketId = options[0];
+
+        ws[socketId].close();
+    }
 
 /*
     read: function () {
