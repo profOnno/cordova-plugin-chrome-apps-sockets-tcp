@@ -164,7 +164,7 @@ var ChromeSocketsTcp = {
                         //now only called once... seems.. to invoke the send response instead of or own one
                         setTimeout(function () {
                             successHandler({socketId: socketId, data: evt.data); //1 should be SOCKET IDDD TODO
-                        },0);
+                        },100);
                     } catch (e) {
                         //console.log("type error");
                     }
