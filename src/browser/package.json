@@ -9,6 +9,8 @@
   "author": "Menno Vossen <menno.vossen@kuopzi.nl> (https://github.com/profOnno)",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "random-strings": "0.0.1",
     "websocket-stream": "^3.2.1",
     "ws": "^1.1.1"
